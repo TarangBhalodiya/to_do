@@ -86,8 +86,8 @@ function markAsCompleted(checkbox) {
 
 }
 
+const taskElement = document.getElementsByClassName("task")
 function filterTask() {
-  const taskElement = document.getElementsByClassName("task")
 
   for (let i = 0; i <= taskElement.length; i++) {
     if (filter.value == "Completed") {
@@ -113,34 +113,23 @@ function filterTask() {
       taskElement[i].classList.remove("hidden")
       taskElement[i].classList.add("block")
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    //   else {
-    //     taskElement[i].classList.add("hidden")
-    //     taskElement[i].classList.remove("block")
-    //     console.log(taskElement[i])
-    //   }
-    //   if (filter.value == "Remaining" && !taskElement[i].classList.contains("completed")) {
-    //     // console.log(taskElement[i])
-    //   } else {
-    //     taskElement[i].classList.add("hidden")
-    //     taskElement[i].classList.remove("block")
-    //     console.log(taskElement[i])
-    //   }
-
-    // }
-
-    // console.log(classContain)
-
   }
 }
+
+function searchTask() {
+  const search = document.getElementById("search").value.trim();
+  for (let i = 0; i <= taskElement.length; i++) {
+    if (taskElement[i].includes(search)) {
+      taskElement[i].classList.add("block")
+      taskElement[i].classList.remove("hidden")
+    } else {
+      taskElement[i].classList.add("hidden")
+      taskElement[i].classList.remove("block")
+    }
+
+  }
+  console.log(search)
+}
+
+
+// str.includes("")
