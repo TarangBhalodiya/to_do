@@ -4,6 +4,7 @@ const addTask = document.getElementById("add-task-btn");
 const filter = document.getElementById("stage")
 const taskContainer = document.getElementById("task-list");
 const checkbox = document.getElementById("completed");
+// const noTaskMsg = 
 let taskArr = [];
 let taskText;
 let newTaskDetail;
@@ -47,17 +48,24 @@ function addTaskToDOM(task) {
   const taskElem = document.createElement("div");
   // add classes
   taskElem.classList =
-    `task bg-amber-100 flex items-center justify-between gap-10 px-6 py-4 max-w-lg rounded-md w-full my-5 ${task.checked ? "completed" : ""}`;
+    `task bg-amber-100 flex max-sm:flex-col gap-5 items-start sm:items-center sm:justify-between sm:gap-10 px-6 py-4 rounded-md w-full my-5 ${task.checked ? "completed" : ""}`;
   // add id
   taskElem.id = task.id;
   // div content
   taskElem.innerHTML = `
-    <input type="checkbox" class="h-5 w-5 completed" onclick="markAsCompleted(this)" ${task.checked ? "checked" : ""} />
-    <p class="taskTitle text-ellipsis w-full ${task.checked ? "line-through" : ""}">${task.task}</p>
-    <div class="flex gap-2">
-      <button onclick="editTask(this)" class="self-start px-6 py-3 rounded-md font-medium text-red-500 hover:font-bold transition-all duration-300 cursor-pointer ${task.checked ? "hidden" : ""}">Edit</button>
-      <button onclick="deleteTask(this)" class="self-start border border-red-500 px-6 py-3 rounded-md font-semibold text-red-500 hover:shadow-[5px_5px_0px_#2d3748] transition-all duration-300 cursor-pointer">Delete</button>
-    </div>`;
+  <input 
+    type="checkbox" 
+    class="sm:size-7 size-5 shrink-0 appearance-none border-2 border-red-400 bg-red-400 rounded-md checked:bg-transparent checked:border-none checked:text-green-500 checked:before:content-['✔'] checked:before:text-green-500 checked:before:flex checked:before:items-center checked:before:justify-center checked:before:w-full checked:before:h-full"
+    onclick="markAsCompleted(this)" 
+    ${task.checked ? "checked" : ""} 
+  />
+
+  <p class="taskTitle text-ellipsis w-full max-sm:text-sm ${task.checked ? "line-through" : ""}">${task.task}</p>
+  <div class="flex gap-2">
+    <button onclick="editTask(this)" class="self-start px-6 py-3 rounded-md font-medium text-red-500 hover:font-bold transition-all duration-300 cursor-pointer max-sm:text-xs ${task.checked ? "hidden" : ""}">Edit</button>
+
+    <button onclick="deleteTask(this)" class="self-start border border-red-500 px-6 py-3 rounded-md font-semibold text-red-500 hover:shadow-btn transition-all duration-300 cursor-pointer max-sm:text-xs">Delete</button>
+  </div>`;
 
   // add this div to DOM
   taskContainer.appendChild(taskElem);
@@ -195,4 +203,14 @@ document.addEventListener("DOMContentLoaded", () => {
   storedTasks.forEach(task => {
     addTaskToDOM(task);
   });
+
 });
+
+
+
+
+// What isse I face
+// Transform all to localStorage
+// grab specific object's specific property from localStorage (it always shows undefined)
+// on reload display all tasks which are in localStorage
+//

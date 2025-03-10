@@ -4,15 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --shadow-btn: 5px 5px 0px #2d3748;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ef4444;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #dc2626;
+      }
+    </style>
     <title>ToDo</title>
   </head>
   <body class="h-full bg-amber-50">
     <!-- add task -->
     <div
-      class="container w-100% mx-auto xl:px-32 xl:py-20 lg:px-20 lg:py-16 md:px-14 md:py-12 px-10 py-12"
+      class="container w-100% mx-auto xl:px-32 xl:py-20 lg:px-20 lg:py-16 md:px-14 md:py-12 px-4 py-12"
     >
-      <h1 class="text-4xl font-black">To Do</h1>
-      <p class="text-lg text-gray-500">Maintain your task list</p>
+      <h1 class="sm:text-4xl font-black text-3xl">To Do</h1>
+      <p class="sm:text-lg text-gray-500 text-sm">Maintain your task list</p>
       <div>
         <!-- form with input field & button -->
         <form onsubmit="setTask(event)" class="form">
@@ -20,12 +41,12 @@
             type="text"
             id="input-field"
             placeholder="Add your task"
-            class="mt-5 px-4 py-3 text-base font-bold bg-red-400 rounded-sm text-amber-50"
+            class="mt-5 sm:px-6 sm:py-3 px-4 py-2 font-bold bg-red-400 rounded-sm text-amber-50 max-sm:text-xs"
           />
           <button
             type="submit"
             id="add-task-btn"
-            class="px-6 py-3 font-semibold border text-base border-red-400 text-red-400 rounded-md transition-all duration-300 hover:shadow-[5px_5px_0px_#2d3748]"
+            class="sm:px-6 sm:py-3 px-4 py-2 font-semibold border out-red-400 text-red-400 rounded-sm transition-all duration-300 hover:shadow-btn max-sm:text-xs"
           >
             Add
           </button>
@@ -34,13 +55,20 @@
     </div>
 
     <!-- display task with search field and filters -->
-    <div class="container w-full mx-auto xl:px-32 lg:px-20 md:px-14 px-10">
-      <div class="task-container-detail flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-bold">Tasks....</h2>
+    <div class="container w-full mx-auto xl:px-32 lg:px-20 md:px-14 px-4">
+      <div
+        class="task-container-detail sm:flex sm:items-center sm:justify-between mb-4"
+      >
+        <h2 class="sm:text-2xl font-bold text-xl">Tasks....</h2>
 
-        <div class="flex gap-6">
+        <div class="sm:flex sm:gap-6">
           <!-- filters -->
-          <select name="task-stage" id="stage" onchange="filterTask()">
+          <select
+            name="task-stage"
+            id="stage"
+            class="block my-3 max-sm:text-xs"
+            onchange="filterTask()"
+          >
             <option value="all">All</option>
             <option value="remaining">Remaining</option>
             <option value="completed">Completed</option>
@@ -50,12 +78,12 @@
             type="text"
             id="search"
             placeholder="Search"
-            class="border border-red-400 rounded-md text-red-400 border-b-red-400 px-4 py-3 text-base font-bold"
+            class="border border-red-400 rounded-sm text-red-400 border-b-red-400 sm:px-6 sm:py-3 px-4 py-2 max-sm:text-xs font-bold"
           />
         </div>
       </div>
 
-      <div id="task-list"></div>
+      <div id="task-list" class="h-96 overflow-y-auto px-2 sm:px-4"></div>
     </div>
     <script src="script.js"></script>
   </body>
