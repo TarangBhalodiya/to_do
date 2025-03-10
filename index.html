@@ -12,8 +12,8 @@
     >
       <h1 class="text-4xl font-black">To Do</h1>
       <p class="text-lg text-gray-500">Maintain your task list</p>
-      <div class="addTask">
-        <form onsubmit="setTask(event)">
+      <div>
+        <form onsubmit="setTask(event)" class="form">
           <input
             type="text"
             id="inputTask"
@@ -22,7 +22,7 @@
           />
           <button
             type="submit"
-            id="addBtn"
+            id="add-task-btn"
             class="px-6 py-3 font-semibold border text-base border-red-400 text-red-400 rounded-md transition-all duration-300 hover:shadow-[5px_5px_0px_#2d3748]"
           >
             Add
@@ -31,34 +31,24 @@
       </div>
     </div>
 
-    <div
-      class="display-task container w-100% mx-auto xl:px-32 lg:px-20 md:px-14 px-10"
-    >
+    <div class="container w-full mx-auto xl:px-32 lg:px-20 md:px-14 px-10">
       <div class="task-container-detail flex items-center justify-between mb-4">
         <h2 class="text-2xl font-bold">Tasks....</h2>
         <div class="flex gap-6">
           <select name="taskStage" id="stage" onchange="filterTask()">
-            <option value="All">All</option>
+            <option value="all">All</option>
             <option value="Remaining">Remaining</option>
             <option value="Completed">Completed</option>
           </select>
-          <form action="#"></form>
           <input
             type="text"
-            name=""
             id="search"
             placeholder="Search"
             class="border border-red-400 rounded-md text-red-400 border-b-red-400 px-4 py-3 text-base font-bold"
           />
-          <button
-            class="px-6 py-3 font-semibold border text-base border-red-400 text-red-400 rounded-md transition-all duration-300 hover:shadow-[5px_5px_0px_#2d3748]"
-            onclick="searchTask()"
-          >
-            Search
-          </button>
         </div>
       </div>
-      <div id="taskList"></div>
+      <div id="task-list"></div>
     </div>
     <script src="script.js"></script>
   </body>
