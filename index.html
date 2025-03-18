@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script defer src="script.js"></script>
     <style type="text/tailwindcss">
       @theme {
         --shadow-btn: 5px 5px 0px #2d3748;
@@ -25,28 +26,27 @@
         background: #dc2626;
       }
     </style>
-    <title>ToDo</title>
+    <title>Todo</title>
   </head>
-  <body class="h-full bg-amber-50">
+  <body class="bg-amber-50 flex flex-col">
     <!-- add task -->
     <div
-      class="container w-100% mx-auto xl:px-32 xl:py-20 lg:px-20 lg:py-16 md:px-14 md:py-12 px-4 py-12"
+      class="container mx-auto xl:px-32 xl:py-20 lg:px-20 lg:py-16 md:px-14 md:py-12 px-4 py-12 flex-1"
     >
-      <h1 class="sm:text-4xl font-black text-3xl">To Do</h1>
+      <h1 class="sm:text-4xl font-black text-3xl">To do</h1>
       <p class="sm:text-lg text-gray-500 text-sm">Maintain your task list</p>
       <div>
         <!-- form with input field & button -->
-        <form onsubmit="setTask(event)" class="form">
+        <form onsubmit="setTask(event)">
           <input
-            type="text"
-            id="input-field"
+            id="input-task"
             placeholder="Add your task"
-            class="mt-5 sm:px-6 sm:py-3 px-4 py-2 font-bold bg-red-400 rounded-sm text-amber-50 max-sm:text-xs"
+            class="mt-5 sm:px-6 sm:py-3 px-4 py-2 font-bold border border-red-400 text-red-400 rounded-sm max-sm:text-xs"
           />
           <button
             type="submit"
-            id="add-task-btn"
-            class="sm:px-6 sm:py-3 px-4 py-2 font-semibold border out-red-400 text-red-400 rounded-sm transition-all duration-300 hover:shadow-btn max-sm:text-xs"
+            id="add-task"
+            class="sm:px-6 sm:py-3 px-4 py-2 font-semibold border border-red-400 bg-red-400 text-amber-50 rounded-sm transition-all duration-300 hover:shadow-btn max-sm:text-xs"
           >
             Add
           </button>
@@ -55,17 +55,15 @@
     </div>
 
     <!-- display task with search field and filters -->
-    <div class="container w-full mx-auto xl:px-32 lg:px-20 md:px-14 px-4">
-      <div
-        class="task-container-detail sm:flex sm:items-center sm:justify-between mb-4"
-      >
-        <h2 class="sm:text-2xl font-bold text-xl">Tasks....</h2>
+    <div class="container mx-auto xl:px-32 lg:px-20 md:px-14 px-4">
+      <div class="sm:flex sm:items-center sm:justify-between mb-4">
+        <h2 class="sm:text-2xl font-bold text-xl">Tasks</h2>
 
         <div class="sm:flex sm:gap-6">
           <!-- filters -->
           <select
             name="task-stage"
-            id="stage"
+            id="filter"
             class="block my-3 max-sm:text-xs"
             onchange="filterTask()"
           >
@@ -75,16 +73,15 @@
           </select>
           <!-- search field -->
           <input
-            type="text"
             id="search"
             placeholder="Search"
+            oninput="searchTask()"
             class="border border-red-400 rounded-sm text-red-400 border-b-red-400 sm:px-6 sm:py-3 px-4 py-2 max-sm:text-xs font-bold"
           />
         </div>
       </div>
 
-      <div id="task-list" class="h-96 overflow-y-auto px-2 sm:px-4"></div>
+      <ul id="task-container" class="overflow-y-auto px-2 sm:px-4"></ul>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>
