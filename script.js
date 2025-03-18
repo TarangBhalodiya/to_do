@@ -42,7 +42,7 @@ function addTaskToDOM(task) {
     task.checked ? "completed" : ""
   }`;
   taskElem.id = task.id;
-  taskElem.setAttribute("data-state", task.checked ? "completed" : "");
+  taskElem.setAttribute("data-state", task.checked ? "completed" : "remaining");
 
   taskElem.innerHTML = `
   <input 
@@ -70,12 +70,13 @@ function addTaskToDOM(task) {
 function editTask(button) {
   const editedTask = prompt("write your new task here");
   const newText = editedTask.trim();
+
   if (newText) {
     const editedTaskId = button.closest(".task").id;
     button.closest(".btns").previousElementSibling.textContent = newText;
 
     const newTaskDetail = taskArr.filter((task) => task.id == editedTaskId);
-    newTaskDetail[0].task = editedTask;
+    newTaskDetail[0].task = newText;
 
     localStorage.setItem("toDoList", JSON.stringify(taskArr));
   } else {
@@ -114,7 +115,7 @@ function markAsCompleted(checkbox) {
   if (checkbox.checked) {
     taskElement.setAttribute("data-state", "completed");
   } else {
-    taskElement.setAttribute("data-state", "");
+    taskElement.setAttribute("data-state", "remaining");
   }
 
   // let updatedTask = taskArr.filter(task => task.id == taskId)
@@ -140,26 +141,19 @@ function filterTask() {
 
     switch (state) {
       case "completed":
-        if (taskElement[i].getAttribute("data-state") == "completed") {
-          taskElement[i].classList.remove("hidden");
-          taskElement[i].classList.add("block");
-        } else {
-          taskElement[i].classList.add("hidden");
-          taskElement[i].classList.remove("block");
-        }
+        taskElement[i].classList.toggle(
+          "hidden",
+          taskElement[i].getAttribute("data-state") === "remaining"
+        );
         break;
       case "remaining":
-        if (taskElement[i].getAttribute("data-state") == "") {
-          taskElement[i].classList.remove("hidden");
-          taskElement[i].classList.add("block");
-        } else {
-          taskElement[i].classList.add("hidden");
-          taskElement[i].classList.remove("block");
-        }
+        taskElement[i].classList.toggle(
+          "hidden",
+          taskElement[i].getAttribute("data-state") === "completed"
+        );
         break;
       default:
         taskElement[i].classList.remove("hidden");
-        taskElement[i].classList.add("block");
     }
   }
 }
@@ -170,21 +164,26 @@ function searchTask() {
 
   const taskTitle = document.querySelectorAll(".task-title");
 
-  for (let i = 0; i < taskTitle.length; i++) {
-    if (taskTitle[i].textContent.toLowerCase().includes(search)) {
-      taskElement[i].classList.add("block");
-      taskElement[i].classList.remove("hidden");
-    } else {
-      taskElement[i].classList.add("hidden");
-      taskElement[i].classList.remove("block");
-    }
-  }
+  Array.from(taskElement).forEach((taskElem, i) => {
+    taskElem.classList.toggle(
+      "hidden",
+      !taskTitle[i].textContent.toLowerCase().includes(search)
+    );
+  });
 }
+
 // take value from localStorage and add to DOM
 document.addEventListener("DOMContentLoaded", () => {
   const storedTasks = JSON.parse(localStorage.getItem("toDoList")) || [];
+
   taskArr = storedTasks;
+
   storedTasks.forEach((task) => {
     addTaskToDOM(task);
   });
 });
+
+// TODO: make new html every time when text edit
+// FIXME: remaining in data-state        DONE
+// FIXME: Option chaining
+// TODO: remove element from ui
