@@ -13,7 +13,7 @@ let taskArr = [];
 function setTask(event) {
   event?.preventDefault();
 
-  const taskText = inputTask?.value?.trim();
+  const taskText = inputTask.value.trim();
 
   if (taskText) {
     const existingTasks = JSON.parse(localStorage.getItem("to-do-list")) || [];
