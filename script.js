@@ -36,6 +36,14 @@ function setTask(event) {
 }
 
 function taskStructure(task) {
+  const taskElem = document.createElement("li");
+
+  taskElem.classList = `task bg-amber-100 flex max-sm:flex-col gap-5 items-start sm:items-center sm:justify-between sm:gap-10 px-6 py-4 rounded-md w-full my-5 ${
+    task.checked ? "completed" : ""
+  }`;
+  taskElem.id = task?.id ?? "todo_" + Date.now();
+  taskElem.setAttribute("data-state", task.checked ? "completed" : "remaining");
+
   const structure = `
   <input 
     type="checkbox" 
@@ -54,23 +62,14 @@ function taskStructure(task) {
 
     <button onclick="deleteTask(this)" class="self-start border border-red-500 px-6 py-3 rounded-md font-semibold text-red-500 hover:shadow-btn transition-all duration-300 cursor-pointer max-sm:text-xs">Delete</button>
   </div>`;
-
-  return structure;
+  taskElem.innerHTML = structure;
+  return taskElem;
 }
 
 // add task to DOM
 function addTaskToDOM(task) {
-  const taskElem = document.createElement("li");
-
-  taskElem.classList = `task bg-amber-100 flex max-sm:flex-col gap-5 items-start sm:items-center sm:justify-between sm:gap-10 px-6 py-4 rounded-md w-full my-5 ${
-    task.checked ? "completed" : ""
-  }`;
-  taskElem.id = task?.id ?? "todo_" + Date.now();
-  taskElem.setAttribute("data-state", task.checked ? "completed" : "remaining");
-
-  taskElem.innerHTML = taskStructure(task);
-
-  taskContainer.appendChild(taskElem);
+  const taskElement = taskStructure(task);
+  taskContainer.appendChild(taskElement);
 }
 
 // use to edit task
@@ -79,12 +78,13 @@ function editTask(button) {
   const taskElement = button.closest(".task");
   const newText = editedTask.trim();
 
+  console.log(taskContainer);
   if (newText) {
     const editedTaskId = button.closest(".task")?.id;
 
     const newTaskDetail = taskArr.filter((task) => task?.id == editedTaskId);
     newTaskDetail[0].task = newText;
-    taskElement.innerHTML = taskStructure(newTaskDetail[0]);
+    taskElement.replaceWith(taskStructure(newTaskDetail[0]));
 
     localStorage.setItem("to-do-list", JSON.stringify(taskArr));
   } else {
